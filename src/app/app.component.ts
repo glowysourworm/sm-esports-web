@@ -1,10 +1,17 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {NgStyle} from '@angular/common';
+
+@Component({
+  selector: 'chatbox',
+  templateUrl: './app.chatbox.html',
+  styleUrl: './app.chatbox.css'
+})
+export class ChatBoxComponent {
+}
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NgStyle],
+  imports: [RouterOutlet, ChatBoxComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
