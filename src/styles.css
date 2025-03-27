@@ -93,6 +93,13 @@ html { background-color: black; }
 }
 
 
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
+
 /**
  * For modern browsers
  * 1. The space content is one way to avoid an Opera bug when the
