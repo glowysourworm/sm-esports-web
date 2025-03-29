@@ -5,7 +5,11 @@
   "projects": {
     "sm-esports-web": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -27,15 +31,15 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss",
+              "node_modules/@angular/material/prebuilt-themes/cyan-orange.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {
               "entry": "src/server.ts"
-            },
-            "verbose": true
+            }
           },
           "configurations": {
             "production": {

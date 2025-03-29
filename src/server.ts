@@ -5,12 +5,17 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import bootstrap from './main.server';
 
+import {AppModel} from './app/model/app.model';
+import {IGetUsersResponse, IUser, IUserResponse, User} from './app/model/user.model';
+import {UserService} from './app/service/user.service';
+
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
 const indexHtml = join(serverDistFolder, 'index.server.html');
 
-const app = express();
-const commonEngine = new CommonEngine();
+const app = express();                      // Primary app engine
+const appModel = new AppModel();            // Primary server side model
+const commonEngine = new CommonEngine();    // Primary server side rendering engine
 
 /**
  * Example Express Rest API endpoints can be defined here.
@@ -51,6 +56,34 @@ app.get('**', (req, res, next) => {
     })
     .then((html) => res.send(html))
     .catch((err) => next(err));
+});
+
+/**
+ * User API (get / post)
+ */
+app.get('/api/users/getAll', async (req, res) => {
+
+  console.log('Request:  api/users/getAll');
+
+  // Response
+  res.send(appModel.users);
+
+});
+
+app.post('/api/users/create', (req, res, next) => {
+
+  console.log('Request:  api/users/create');
+
+  // Request: Store user
+  appModel.users.push(req.body.user);
+
+  // Response
+  res.send({
+      id: req.body.user.id,
+      success: true,
+      message: 'User Created Successfully:  ' + req.body.user.name
+  });
+
 });
 
 /**

@@ -44,6 +44,19 @@
     margin: 10px;
   }
 
+  .flex-container {
+    display: flex;
+    flex: 100%;
+  }
+
+  .flex-item-1 {
+    flex: 100%;
+  }
+
+  .flex-item-2 {
+    flex: 300px;
+  }
+
   .tab-header-item {
     color:lightgray;
     background-color: black;
@@ -81,38 +94,36 @@
          alt="metroid.png"
          width="48"
          height="48" />
-    <h1 class="ibm-plex-mono-medium">Super Metroid Esports</h1>
+    <h1 class="ibm-plex-mono-medium">Super Metroid Esports (In Development)</h1>
 
     <div class="clear-fix"></div>
-
-    <h5 class="ibm-plex-mono-light">(Proof of Concept)</h5>
   </div>
 
   <div class="clear-fix"></div>
 
-  <div class="tab-control">
-    <div class="tab-header">
-      <div class="tab-header-item"
-           [ngClass]=" { 'selected': selectedTab.index == tabs[0].index, 'not-selected': selectedTab.index != tabs[0].index }"
-           (click)="selectedTab = tabs[0];">
-        {{tabs[0].name}}
-      </div>
-      <div class="tab-header-item"
-           [ngClass]=" { 'selected': selectedTab.index == tabs[1].index, 'not-selected': selectedTab.index != tabs[1].index }"
-           (click)="selectedTab = tabs[1];">
-        {{tabs[1].name}}
-      </div>
-      <div class="clear-fix"></div>
+  <div class="flex-container">
+    <div class="tab-control flex-item-1">
+        <div class="tab-header">
+          <div class="tab-header-item"
+               *ngFor="let tab of tabs; index as i;"
+               routerLink="{{tab.route}}"
+               [ngClass]=" { 'selected': selectedTab.index == tab.index, 'not-selected': selectedTab.index != tab.index }"
+               (click)="selectedTab = tab;">
+            {{tab.name}}
+          </div>
+          <div class="clear-fix"></div>
+        </div>
+        <div class="tab-content">
+          <div class="tab-item" routerLink="/main">
+            <maintab *ngIf="selectedTab.index == 0" />
+            <chattab *ngIf="selectedTab.index == 1" />
+            <usertab *ngIf="selectedTab.index == 2" />
+          </div>
+        </div>
     </div>
-    <div class="tab-content">
-      <div class="tab-item"
-           *ngIf="selectedTab.index == 0">
-        <maintab  />
-      </div>
-      <div class="tab-item"
-           *ngIf="selectedTab.index == 1">
-        <chattab  />
-      </div>
+
+    <div class="container flex-item-2">
+      <img src="samus-text.png" alt="samus-text.png" />
     </div>
   </div>
 

@@ -11,12 +11,12 @@
   }
 
   h2 {
-    font-size: 1.0em;
+    font-size: 1.2em;
     color: white;
   }
 
   h4 {
-    font-size: 0.75em;
+    font-size: 1.0em;
     color: purple;
   }
 
@@ -32,79 +32,20 @@
     color: lawngreen;
   }
 
-  .banner {
-    width:100%;
-    text-align: right;
-  }
-
-  .banner > h1 {
-    float: right;
-    margin: 10px;
-  }
-
-  .banner > img {
-    height: 50px;
-    float: right;
-    margin: 10px;
-  }
-
-  .content {
-    width: 100%;
-  }
-
-  .content > .container {
-    margin-left: 20px;
+  .container {
+    padding: 20px;
   }
 
   .bullet-list {
-    width: 300px;
   }
 
   .bullet-list > h4{
     margin-left: 40px;
   }
 
-  chatbox {
-    position: absolute;
-    top: calc(50% - (/* height */400px / 2));
-    left: calc(50% - (/* width */350px / 2));
-    height: 400px;
-    width: 350px;
-  }
-
-  .content > .container > img {
-    display: block;
-    height:700px;
-  }
-
-  .social-links {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    margin: 20px;
-  }
-
-  .social-links path {
-    transition: fill 0.3s ease;
-    fill: var(--gray-400);
-  }
-
-  .social-links a:hover svg path {
-    fill: var(--gray-900);
-  }
-
-  @media screen and (max-width: 650px) {
-    .content {
-      flex-direction: column;
-      width: max-content;
-    }
-
-  }
 </style>
 
-<div class="content">
-
-  <div class="container float-left">
+  <div class="container">
     <h2 class="ibm-plex-mono-medium">What is this?</h2>
 
     <div class="bullet-list">
@@ -114,7 +55,7 @@
     <h2 class="ibm-plex-mono-medium">How will this help the SM speed running community?</h2>
 
     <div class="bullet-list">
-      <h4 class="ibm-plex-mono-medium">It <span class="green">may</span> help the SM speed running community, when the SM speed running community helps to <span class="green">collaborate</span>! ^_^</h4>
+      <h4 class="ibm-plex-mono-medium">It <span class="green">may</span> help the SM speed running community, when the SM speed running community helps to <span class="green">collaborate! ^_^</span></h4>
     </div>
 
     <h2 class="ibm-plex-mono-medium">What are some of the design goals?</h2>
@@ -130,11 +71,3 @@
     </div>
 
   </div>
-
-  <div class="container float-right">
-    <img src="samus-text.png" alt="samus-text.png" />
-  </div>
-
-  <div class="clear-fix"></div>
-
-</div>

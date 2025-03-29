@@ -1,0 +1,40 @@
+<style>
+
+  .add-user {
+
+  }
+  .add-user .banner{
+    color: white;
+    padding-top: 15px;
+    padding-left: 15px;
+  }
+  .add-user > .input-form {
+    width: 500px;
+    padding: 15px;
+  }
+
+  .user {
+    color:white;
+  }
+</style>
+
+<div class="container">
+
+  <div class="add-user">
+    <div class="banner">
+      <h3>Chat User:   (This is for development purposes only)</h3>
+    </div>
+    <div class="input-form">
+      <input-hint />
+      <basic-button class="float-right" (click)="addUser()" />
+
+      <div class="clear-fix"></div>
+    </div>
+  </div>
+
+  <div class="user"
+       *ngFor="let user of users; index as i;"
+       [ngClass]=" { 'selected': user.selected }">
+    User: {{user.name}} Id: {{user.id}}
+  </div>
+</div>
