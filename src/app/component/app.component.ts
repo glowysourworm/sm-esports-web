@@ -6,6 +6,7 @@ import {MainTabComponent} from './maintab.component';
 import {ChatTabComponent} from './chattab.component';
 import {ChatBoxComponent} from './chatbox.component';
 import {UserTabComponent} from './usertab.component';
+import {NewUserDialogComponent} from './new-user-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -15,12 +16,18 @@ import {UserTabComponent} from './usertab.component';
 })
 
 export class AppComponent {
+
+  private readonly dialog: NewUserDialogComponent;
+
   title = 'sm-esports-web';
 
   tabs = [new Tab('Community Meta', 'main', 0), new Tab('Chat', 'chat', 1), new Tab('Users', 'users', 2)];
   selectedTab: Tab;
 
   constructor() {
+
+    // New user modal reference
+    this.dialog = new NewUserDialogComponent();
 
     // Initialize tabs
     this.selectedTab = this.tabs[0];
@@ -32,5 +39,9 @@ export class AppComponent {
         this.selectedTab = tab;
     }
     */
+  }
+
+  ngOnInit() {
+    this.dialog.openDialog('150ms', '50ms');
   }
 }
