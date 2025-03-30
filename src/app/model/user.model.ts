@@ -25,3 +25,23 @@ export class User implements IUser {
     this.selected = false;
   }
 }
+
+export class UserResponse implements IUserResponse {
+  id: number;
+  success: boolean;
+  message: string;
+
+  constructor(id: number, success: boolean, message: string) {
+    this.id = id;
+    this.success = success;
+    this.message = message;
+  }
+}
+
+export class GetUsersResponse implements IGetUsersResponse {
+  users: IUser[];
+
+  constructor(users: IUser[]) {
+    this.users = users;
+  }
+}

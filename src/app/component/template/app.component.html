@@ -104,17 +104,16 @@
   <div class="flex-container">
     <div class="tab-control flex-item-1">
         <div class="tab-header">
-          <div class="tab-header-item"
+          <a class="tab-header-item"
                *ngFor="let tab of tabs; index as i;"
-               routerLink="{{tab.route}}"
                [ngClass]=" { 'selected': selectedTab.index == tab.index, 'not-selected': selectedTab.index != tab.index }"
                (click)="selectedTab = tab;">
             {{tab.name}}
-          </div>
+          </a>
           <div class="clear-fix"></div>
         </div>
         <div class="tab-content">
-          <div class="tab-item" routerLink="/main">
+          <div class="tab-item">
             <maintab *ngIf="selectedTab.index == 0" />
             <chattab *ngIf="selectedTab.index == 1" />
             <usertab *ngIf="selectedTab.index == 2" />
@@ -138,4 +137,4 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 
-<router-outlet />
+

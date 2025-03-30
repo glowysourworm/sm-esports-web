@@ -13,9 +13,6 @@
     padding: 15px;
   }
 
-  .user {
-    color:white;
-  }
 </style>
 
 <div class="container">
@@ -25,16 +22,13 @@
       <h3>Chat User:   (This is for development purposes only)</h3>
     </div>
     <div class="input-form">
-      <input-hint />
-      <basic-button class="float-right" (click)="addUser()" />
+      <input-hint (valueChange)="onUserNameChanged($event)" />
+      <basic-button [text]="'Create User'" class="float-right" (click)="addUser()" />
+      <basic-button [text]="'Get All Users'" class="float-right" (click)="getUsers()" />
 
       <div class="clear-fix"></div>
     </div>
   </div>
 
-  <div class="user"
-       *ngFor="let user of users; index as i;"
-       [ngClass]=" { 'selected': user.selected }">
-    User: {{user.name}} Id: {{user.id}}
-  </div>
+  <user-list [users]="userList" />
 </div>
