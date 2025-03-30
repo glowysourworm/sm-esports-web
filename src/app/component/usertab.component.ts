@@ -94,13 +94,15 @@ export class UserTabComponent {
             .getAllUsers()
             .forEach((userResponse) => {
 
-          // Clear
-          this.userList = [];
+              console.log("updating user list");
 
-          // Apply user response
-          userResponse.users.forEach((user) => {
-            this.userList.push(user);
-          })
+              // Clear
+              this.userList = [];
+
+              // Apply user response
+              userResponse.users.forEach((user) => {
+                this.userList.push(user);
+              })
         }).finally(() =>
         {
           console.log('Users updated');
