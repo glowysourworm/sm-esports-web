@@ -40,7 +40,7 @@ export class UserService {
       }
     };
 
-    return this.http.get(this.urlCreate, options);
+    return this.http.get(this.urlCreate + '/' + user.name, options);
   }
 
    getAllUsers(): Observable<GetUsersResponse> {
