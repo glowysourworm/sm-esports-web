@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {GetUsersResponse, IGetUsersResponse, IUser, IUserResponse, User} from '../model/user.model';
-import {Observable} from 'rxjs';
+import {firstValueFrom, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +12,64 @@ export class UserService {
   private readonly http: HttpClient;
 
   // Users -> Post -> Create User
-  urlCreate = "http://localhost:4200/users/create";
-  urlGetAll = "http://localhost:4200/users/getAll";
+  urlGet = "/users/:userName";
+  urlCreate = "/users/create";
+  urlGetAll = "/users/getAll";
+  urlHasDuplicate = "/users/hasDuplicate";
 
   constructor(private httpClient: HttpClient) {
     this.http = httpClient;
+  }
+
+  async getUser(userName: string) {
+
+    let httpHeaders = new HttpHeaders();
+
+    httpHeaders.append('content-type', 'application/json');
+    httpHeaders.append('accept', '*');
+
+    let options = {
+      headers: httpHeaders,
+      withCredentials: true,
+      transferCache: {
+        includeHeaders: ['content-type', 'accept', '*'],
+        includePostRequests: true,
+        includeRequestsWithAuthHeaders: true
+      }
+    };
+
+    return await firstValueFrom<User>(this.http.get<User>(this.urlGet + '/' + userName, options));
+  }
+
+  async hasDuplicateUser(userName: string) {
+
+    let httpHeaders = new HttpHeaders();
+
+    httpHeaders.append('content-type', 'application/json');
+    httpHeaders.append('accept', '*');
+    httpHeaders.append('Access-Control-Allow-Origin', '*');
+
+    let options = {
+      headers: httpHeaders,
+      withCredentials: true,
+      transferCache: {
+        includeHeaders: ['content-type', 'accept', '*'],
+        includePostRequests: true,
+        includeRequestsWithAuthHeaders: true
+      }
+    };
+
+    return await firstValueFrom<boolean>(this.http.get<boolean>(this.urlHasDuplicate + '/' + userName, options));
+
+    /*
+    return await fetch(this.urlHasDuplicate + '/' + userName, {
+      method: 'GET',
+      headers: {
+        'conetnt-type': 'application/json',
+        'accept': '*'
+      }
+    });
+    */
   }
 
   createUser(user: User) : Observable<Object> {
@@ -43,7 +96,7 @@ export class UserService {
     return this.http.get(this.urlCreate + '/' + user.name, options);
   }
 
-   getAllUsers(): Observable<GetUsersResponse> {
+  getAllUsers(): Observable<GetUsersResponse> {
 
      let httpHeaders = new HttpHeaders();
 

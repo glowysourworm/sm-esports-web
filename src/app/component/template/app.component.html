@@ -57,6 +57,11 @@
     flex: 300px;
   }
 
+  .primary-user {
+    float: left;
+    color: lightgray;
+  }
+
   .tab-header-item {
     color:lightgray;
     background-color: black;
@@ -90,6 +95,8 @@
   <sociallinks class="float-left" />
 
   <div class="banner">
+    <h4 class="primary-user">{{primaryUser.name}}</h4>
+
     <img ngSrc="metroid.png"
          alt="metroid.png"
          width="48"

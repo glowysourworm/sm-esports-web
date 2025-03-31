@@ -47,6 +47,20 @@ app.use(
   }),
 );
 
+app.get('/users/:userName', async (req, res) => {
+
+  console.log(`Server Request:  /users/${req.params.userName}`);
+
+  let db = Container.get(DataModel);
+
+  let user = db.users.find((value: User, index: number, userArray: User[])=> {
+    return value.name == req.params.userName;
+  });
+
+  res.send(user);
+
+});
+
 app.get('/users/getAll', async (req, res) => {
 
   console.log('Server Request:  /users/getAll');
@@ -56,9 +70,22 @@ app.get('/users/getAll', async (req, res) => {
   res.send(new GetUsersResponse(db.users));
 });
 
+app.get('/users/hasDuplicate/:userName', async (req, res) => {
+
+  console.log(`Server Request:  /users/hasDuplicate/${req.params.userName}`);
+
+  let db = Container.get(DataModel);
+
+  // Check for duplicate users
+  return db.users.some(value => {
+    return value.name == req.params.userName;
+  });
+});
+
+
 app.get('/users/create/:userName', async (req, res) => {
 
-  console.log(`Server Request:  /users/create/${req.params.userName}`);
+  console.log("Server Request:  /users/create/" + req.params.userName);
 
   let db = Container.get(DataModel);
 

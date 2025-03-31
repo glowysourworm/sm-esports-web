@@ -7,7 +7,7 @@
   }
   .container input,
   .container mat-form-field {
-    width: 300px;
+    width: 100%;
   }
 </style>
 
@@ -16,10 +16,13 @@
   <mat-dialog-content>
     <mat-form-field>
       <mat-label>User Name</mat-label>
-      <input matInput [(ngModel)]="userName" />
+      <input matInput [(ngModel)]="value" />
+      @if (!validateDialog()) {
+        <mat-error>{{errorMessage()}}</mat-error>
+      }
     </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button mat-dialog-close>Create User</button>
+    <button mat-button [disabled]="!validateDialog()" (click)="createUserAndClose()">Create User</button>
   </mat-dialog-actions>
 </div>
