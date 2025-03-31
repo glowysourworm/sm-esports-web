@@ -4,13 +4,12 @@ import {
   isMainModule,
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
-
 import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Container, Token } from 'typedi';
-import { GetUsersResponse, User, IUser, UserResponse } from './app/model/user.model';
-import {DataModel} from './server/model/server.datamodel';
+import { DataModel } from './server/model/server.datamodel';
+import {Container} from 'typedi';
+import {GetUsersResponse, User, UserResponse} from './app/model/user.model';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -94,14 +93,22 @@ app.get('/users/create/:userName', async (req, res) => {
     return value.name == req.params.userName;
   }))
   {
-    res.send(new UserResponse(0, true, `User Creation Failed:  Duplicate user already exists`));
+    // Existing User
+    let existingUser = db.users.find((value: User, index: number, userArray: User[])=> {
+      return value.name == req.params.userName;
+    });
+
+    res.send(new UserResponse(existingUser || User.default(), true, `User Creation Failed:  Duplicate user already exists`));
     return;
   }
 
   // Add User to in memory database
   db.users.push(new User(db.users.length, req.params.userName));
 
-  res.send(new UserResponse(0, true, `User Created ${db.users[db.users.length - 1]}`));
+  // User Created
+  let newUser = db.users[db.users.length-1];
+
+  res.send(new UserResponse(newUser, true, `User Created ${db.users[db.users.length - 1]}`));
 });
 
 /**

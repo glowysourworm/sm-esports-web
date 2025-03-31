@@ -1,11 +1,11 @@
 export interface IUser {
   id: number;
   name: string;
-  selected: boolean;
+  loggedOn: boolean;
 }
 
 export interface IUserResponse {
-  id: number;
+  user: IUser;
   success: boolean;
   message: string;
 }
@@ -17,22 +17,27 @@ export interface IGetUsersResponse {
 export class User implements IUser {
   id: number;
   name: string;
-  selected: boolean;
+  loggedOn: boolean;
 
   constructor(id: number, name: string) {
     this.id = id;
     this.name = name;
-    this.selected = false;
+    this.loggedOn = false;
+  }
+
+  static default(){
+    return new User(-1, 'Not Logged In');
   }
 }
 
 export class UserResponse implements IUserResponse {
-  id: number;
+
+  user: IUser;
   success: boolean;
   message: string;
 
-  constructor(id: number, success: boolean, message: string) {
-    this.id = id;
+  constructor(user: IUser, success: boolean, message: string) {
+    this.user = user;
     this.success = success;
     this.message = message;
   }

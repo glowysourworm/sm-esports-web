@@ -1,34 +1,28 @@
-import {Component, inject, Injectable, ViewChild, viewChild} from '@angular/core';
-import {NgClass, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
+import {afterNextRender, Component} from '@angular/core';
 import {Tab} from '../model/tab.model';
-import {SocialLinksComponent} from './sociallinks.component';
-import {MainTabComponent} from './maintab.component';
-import {ChatTabComponent} from './chattab.component';
-import {ChatBoxComponent} from './chatbox.component';
-import {UserTabComponent} from './usertab.component';
-import {NewUserDialogComponent} from './new-user-dialog.component';
 import {UserService} from '../service/user.service';
 import {User} from '../model/user.model';
-import {firstValueFrom} from 'rxjs';
+import {ModalService} from '@developer-partners/ngx-modal-dialog';
+import {ModalSize} from '@developer-partners/ngx-modal-dialog';
+import {NewUserDialogComponent} from './new-user-dialog.component';
 
 @Component({
   selector: 'app-root',
-  imports: [NgOptimizedImage, NgIf, NgClass, SocialLinksComponent, MainTabComponent, ChatTabComponent,
-    ChatBoxComponent, NgForOf, UserTabComponent, NewUserDialogComponent],
-  templateUrl: './template/app.component.html'
+  templateUrl: './template/app.component.html',
+  standalone: false
 })
-
 export class AppComponent {
 
-  private readonly dialog: NewUserDialogComponent;
+  //private readonly modalService: ModalService;
   private readonly userService: UserService;
+  //private readonly newUserDialog: NewUserDialogComponent;
 
   // PRIMARY USER MODEL:  This should store user's data (could be relocated to user service.. which
   //                      would then be the "user's service"
   public primaryUser: User;
 
-  // TODO: Fix the modal dialog
-  private userNameInput: string;
+  // Logon Dialog
+  //public userNameInput: string;
 
   title = 'sm-esports-web';
 
@@ -37,13 +31,18 @@ export class AppComponent {
 
   constructor(userService: UserService) {
 
-    this.dialog = new NewUserDialogComponent(userService);
+    //this.newUserDialog = new NewUserDialogComponent(userService);
     this.primaryUser = new User(-1, 'Not Logged In');
     this.userService = userService;
-    this.userNameInput = '';
+    //this.userNameInput = '';
 
     // Initialize tabs
     this.selectedTab = this.tabs[0];
+
+    // TODO: Find a way to prevent the dialog from destroying its data!
+    //this.newUserDialog.userValue.subscribe( userName => {
+    //  this.userNameInput = userName;
+    //});
 
     /*
     // TODO: Look for active route <-> tab
@@ -52,50 +51,35 @@ export class AppComponent {
         this.selectedTab = tab;
     }
     */
-  }
 
-  createUser(userName: string){
+    // IMPORTANT: Defer this until after SSR completes
+    /*
+    afterNextRender(() => {
 
-    // Create the user
-    this.userService.createUser(new User(-1, userName)).subscribe(user => {
+      // Show Dialog -> Create User
+      this.newUserDialog
+        .showDialog()
+        .beforeClosed()
+        .subscribe(() => {
 
-      // Finally, query for all user's app data
-      this.userService.getUser(userName).then(value =>
-      {
-        // FINALLY, have the user's data cached.
-        this.primaryUser.id = value.id;
-        this.primaryUser.name = value.name;
-        //this.primaryUser.selected = value.selected;
+          console.log(this.newUserDialog.userInput);
+
+
       });
     });
+    */
   }
 
-  ngOnInit() {
+  logOn(){
 
-    // Must "Log On" as (development) user
-    //this.dialog?.openDialog('150ms', '50ms');
+    // Finish Logon
+    this.userService
+      .createUser(new User(-1, this.primaryUser.name))    // Emitted value
+      .subscribe(response => {
 
-    setTimeout(() => {
-      this.dialog.openDialog('150ms', '50ms');
-    });
+        // Finally, set the new user
+        this.primaryUser.loggedOn = true;
+      });
 
-  }
-
-  ngAfterViewInit() {
-
-    // Must "Log On" as (development) user
-    this.dialog.createUserEvent.subscribe((userName: string) => {
-      this.createUser(userName);
-    }, (error) =>{
-      console.error(error);
-    }, () =>
-    {
-      console.log("complete");
-    });
-
-    // TODO: Remove this once the other emitter is fixed
-    this.dialog.onUserNameChange.subscribe((userName: string) => {
-      this.userNameInput = userName;
-    })
   }
 }

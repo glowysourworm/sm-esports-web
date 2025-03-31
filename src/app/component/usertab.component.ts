@@ -62,7 +62,7 @@ export class UserTabComponent {
 
     this.userInput = '';
     this.userService = theService;
-    this.userList = [new User(0, 'Test User')];
+    this.userList = [new User(-1, 'Not Logged In')];
 
     /*
     // Initialize -> getAllUsers
@@ -86,7 +86,7 @@ export class UserTabComponent {
       console.log('Adding user ' + this.userInput);
 
       this.userService
-          .createUser(new User(0, this.userInput))
+          .createUser(new User(-1, ''))
           .subscribe(() =>
       {
         // Reset user array

@@ -29,18 +29,18 @@
   }
 
   .banner {
+    display: flex;
     width:100%;
     text-align: right;
+    background-color: darkgray;
   }
 
   .banner > h1 {
-    float: right;
     margin: 10px;
   }
 
   .banner > img {
     height: 50px;
-    float: right;
     margin: 10px;
   }
 
@@ -57,9 +57,40 @@
     flex: 300px;
   }
 
+  .modal-container h2 {
+    text-align: center;
+  }
+  .modal-container button {
+    margin-right: 8px;
+  }
+  .modal-container  input,
+  .modal-container  mat-form-field {
+    width: 100%;
+  }
+
   .primary-user {
-    float: left;
     color: lightgray;
+    text-align: left;
+    align-content: center;
+    background-color: dimgray;
+    padding-right: 10px;
+  }
+
+  .primary-user > input {
+    font-size: 1.0em;
+    color: dimgray;
+    margin: 5px;
+    padding:8px;
+    border:2px solid #eee;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+  }
+  .primary-user > input:focus {
+    border:2px solid #eee;
+  }
+
+  .logo {
+    flex: max-content;
   }
 
   .tab-header-item {
@@ -92,18 +123,14 @@
 
 <main class="main">
 
-  <sociallinks class="float-left" />
-
   <div class="banner">
-    <h4 class="primary-user">{{primaryUser.name}}</h4>
 
-    <img ngSrc="metroid.png"
-         alt="metroid.png"
-         width="48"
-         height="48" />
-    <h1 class="ibm-plex-mono-medium">Super Metroid Esports (In Development)</h1>
+    <div class="primary-user">
+      <input [(ngModel)]="primaryUser.name" type="text" required />
+      <button mat-raised-button [disabled]="primaryUser.loggedOn">Log On</button>
+    </div>
 
-    <div class="clear-fix"></div>
+    <h1 class="logo ibm-plex-mono-medium">Super Metroid Esports (In Development)</h1>
   </div>
 
   <div class="clear-fix"></div>
@@ -132,7 +159,6 @@
       <img src="samus-text.png" alt="samus-text.png" />
     </div>
   </div>
-
 </main>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->

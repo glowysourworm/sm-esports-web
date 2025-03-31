@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {GetUsersResponse, IGetUsersResponse, IUser, IUserResponse, User} from '../model/user.model';
+import {GetUsersResponse, IGetUsersResponse, IUser, IUserResponse, User, UserResponse} from '../model/user.model';
 import {firstValueFrom, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class UserService {
 
   private readonly http: HttpClient;
@@ -72,7 +71,7 @@ export class UserService {
     */
   }
 
-  createUser(user: User) : Observable<Object> {
+  createUser(user: User) : Observable<UserResponse> {
 
     let httpHeaders = new HttpHeaders();
 
@@ -93,7 +92,7 @@ export class UserService {
       }
     };
 
-    return this.http.get(this.urlCreate + '/' + user.name, options);
+    return this.http.get<UserResponse>(this.urlCreate + '/' + user.name, options);
   }
 
   getAllUsers(): Observable<GetUsersResponse> {
