@@ -25,12 +25,17 @@
 
 
   main {
-    display: block;
+    display: flex;
+    flex-direction: column;
   }
 
+
+
   .banner {
-    margin-bottom: 30px;
+    flex: auto;
+
     display: flex;
+    flex-direction: row;
     width: 100%;
     text-align: right;
     color: #FFFFFF;
@@ -53,19 +58,27 @@
   }
   .banner a.banner-item.active {
     text-decoration: none;
+    background-color: #FFFFFF;
+    color: rgba(100, 100, 255, 1);
   }
 
-  .flex-container {
-    display: flex;
-    flex: 100%;
+  @keyframes fadein {
+    from { opacity: 0}
+    to   { opacity: 1}
   }
 
-  .flex-item-1 {
-    flex: 100%;
-  }
+  .app-body {
+    flex: max-content;
+    flex-direction: column;
+    margin: 30px;
+    background-color: rgba(0,0,0,0.70);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
 
-  .flex-item-2 {
-    flex: 300px;
+    color: #EEEEEE;
+
+    opacity: 1;
+    animation: fadein 2s;
   }
 
   .modal-container h2 {
@@ -124,32 +137,6 @@
     }
   }
 
-  .tab-header-item {
-    color:lightgray;
-    background-color: black;
-    border: 1px solid darkgray;
-    float:left;
-    padding: 10px;
-    cursor: pointer;
-  }
-
-  .tab-header-item.selected {
-    background-color: rgba(50, 50, 50, 100);
-  }
-
-  .tab-header-item.not-selected {
-    background-color: transparent;
-  }
-
-  .tab-header-item:hover {
-    transition: background-color 0.3s ease;
-    background-color: rgba(50, 50, 50, 100);
-  }
-
-  .tab-content {
-    border: 1px solid darkgray;
-  }
-
   @media screen and (max-width: 1400px) {
     .banner .logo > h1 {
       font-size: 1.5em;
@@ -180,31 +167,8 @@
     </div>
   </div>
 
-  <div class="clear-fix"></div>
-
-  <div class="flex-container">
-    <div class="tab-control flex-item-1">
-        <div class="tab-header">
-          <a class="tab-header-item"
-               *ngFor="let tab of tabs; index as i;"
-               [ngClass]=" { 'selected': selectedTab.index == tab.index, 'not-selected': selectedTab.index != tab.index }"
-               (click)="selectedTab = tab;">
-            {{tab.name}}
-          </a>
-          <div class="clear-fix"></div>
-        </div>
-        <div class="tab-content">
-          <div class="tab-item">
-            <maintab *ngIf="selectedTab.index == 0" />
-            <chattab *ngIf="selectedTab.index == 1" />
-            <usertab *ngIf="selectedTab.index == 2" />
-          </div>
-        </div>
-    </div>
-
-    <div class="container flex-item-2">
-      <img src="samus-text.png" alt="samus-text.png" />
-    </div>
+  <div class="app-body">
+    <router-outlet />
   </div>
 </main>
 
